@@ -24,7 +24,7 @@ int randomNum(int min, int max)
 
 void printOriginalMatrix(int rows, int columns)
 {
-    printColorData($"Получили случайный двухмерный массив размером [{rows}, {columns}], -> ");
+    printColorData($"Получили случайный двумерный массив размером [{rows}, {columns}], -> ");
     int[,] table = new int[rows, columns];
     for (int i = 0; i < table.GetLength(0); i++)
     {
