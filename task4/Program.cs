@@ -21,22 +21,37 @@ int randomNum(int min, int max)
 
 void printOriginalMatrix(int length, int width, int height)
 {
-    printColorData($"Получили случайный трёхмерный массив размером [{length}, {width}, {height}], -> ");
+    printColorData($"Получили трёхмерный массив без повторений двухзначных чисел размером [{length}, {width}, {height}], -> ");
     int[,,] table = new int[length, width, height];
-    int count = 1;
+    int[] checkList = new int[length * width * height];
+    int count = 0;
     for (int i = 0; i < table.GetLength(0); i++)
     {
         for (int j = 0; j < table.GetLength(1); j++)
         {
             for (int q = 0; q < table.GetLength(2); q++)
             {
-                Console.Write($"{table[i, j, q] = randomNum(5 * count + 5, 5 * (count + 1) + 5)} ({j},{q},{i}) ");
+                table[i, j, q] = randomNum(10, 100);
+                checkNumber();
+                void checkNumber()
+                {
+                    for (int ch = 0; ch < checkList.Length; ch++)
+                    {
+                        if (table[i, j, q] == checkList[ch])
+                        {
+                            table[i, j, q] = randomNum(10, 100);
+                            checkNumber();
+                        }
+                    }
+                }
+                Console.Write($"{table[i, j, q]} ({j},{q},{i}) ");
+                checkList[count] = table[i, j, q];
                 count++;
             }
             Console.WriteLine("");
         }
     }
-userAnotherTry();
+    userAnotherTry();
 }
 
 void userAnotherTry()
@@ -60,12 +75,12 @@ void userAnotherTry()
 
 void userData()
 {
-    int userLength = randomNum(1, 3);
-    int userWidth = randomNum(1, 3);
-    int userHeight = randomNum(1, 3);
+    int userLength = 2;
+    int userWidth = 2;
+    int userHeight = 2;
     printOriginalMatrix(userLength, userWidth, userHeight);
 }
 
 Console.Clear();
-Console.WriteLine("Приветствую! Эта программа на вход принимает позицию элемента в двумерном массиве, и возвращает значение этого элемента или же указание, что такого элемента нет.");
+Console.WriteLine("Приветствую! Эта программа сформирует трёхмерный массив из неповторяющихся двузначных чисел и будет построчно выводить массив, добавляя индексы каждого элемента.");
 userData();
